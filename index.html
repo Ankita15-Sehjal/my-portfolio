@@ -1,0 +1,1713 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101510">
+    <meta name="description" content="Ankita Kumari — Full Stack Developer. Building responsive web applications with React, Angular, Node.js and Express.js.">
+    <title>Ankita Kumari | Full Stack Developer</title>
+
+    <!--
+    DESIGN CONCEPT: "The Developer's Workbench"
+    A portfolio inspired by a developer's live coding environment and system console.
+    Projects appear as executable modules, skills as a technology stack,
+    and the hero features an interactive terminal that introduces Ankita's work.
+    Warm ivory text, deep forest-black surfaces, and electric lime accents
+    create a distinctive engineering identity.
+    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #101510;
+            --surface: #171e18;
+            --surface-light: #202920;
+            --line: #344034;
+            --text: #f1f4e9;
+            --muted: #a1ad9d;
+            --lime: #c7fa68;
+            --lime-dark: #9ec747;
+            --orange: #ff9867;
+            --mono: "DM Mono", monospace;
+            --sans: "Space Grotesk", sans-serif;
+            --container: 1120px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.13;
+            background-image: radial-gradient(#82917c 0.6px, transparent 0.6px);
+            background-size: 25px 25px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--lime);
+            outline-offset: 5px;
+        }
+
+        ::selection {
+            background: var(--lime);
+            color: var(--bg);
+        }
+
+        .container {
+            width: min(var(--container), calc(100% - 64px));
+            margin-inline: auto;
+        }
+
+        .mono {
+            font-family: var(--mono);
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--lime);
+            font: 12px var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--lime);
+        }
+
+        .section {
+            padding: 112px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 48px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(34px, 5vw, 60px);
+            line-height: 1.05;
+            letter-spacing: -0.055em;
+            font-weight: 500;
+            margin-top: 14px;
+        }
+
+        .section-heading > p {
+            max-width: 310px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Navigation resembles a compact editor status bar. */
+
+        .nav-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(16, 21, 16, 0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        nav {
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font: 13px var(--mono);
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            background: var(--lime);
+            color: var(--bg);
+            font-weight: 500;
+            border-radius: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 29px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font: 12px var(--mono);
+            transition: color 180ms ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--lime);
+        }
+
+        .nav-contact {
+            color: var(--lime) !important;
+            border: 1px solid var(--lime-dark);
+            padding: 9px 13px;
+            border-radius: 4px;
+        }
+
+        .nav-contact:hover {
+            background: var(--lime);
+            color: var(--bg) !important;
+        }
+
+        /* Hero: a terminal and its live prompt form the signature interaction. */
+
+        .hero {
+            min-height: 720px;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 120px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 65px;
+            width: 100%;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            margin: 27px 0 23px;
+            font-size: clamp(58px, 8.4vw, 112px);
+            line-height: 0.94;
+            font-weight: 500;
+            letter-spacing: -0.085em;
+        }
+
+        .hero h1 .accent {
+            display: block;
+            color: var(--lime);
+        }
+
+        .hero-description {
+            max-width: 450px;
+            color: var(--muted);
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .hero-description strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+            align-items: center;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 47px;
+            padding: 0 19px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            font: 12px var(--mono);
+            transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .button-primary {
+            background: var(--lime);
+            color: var(--bg);
+            border-color: var(--lime);
+        }
+
+        .button-primary:hover {
+            background: #d9ff9c;
+        }
+
+        .button-secondary:hover {
+            border-color: var(--lime);
+            color: var(--lime);
+        }
+
+        .hero-footnote {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 43px;
+            color: var(--muted);
+            font: 11px var(--mono);
+        }
+
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--lime);
+            border-radius: 50%;
+            box-shadow: 0 0 12px #c7fa6870;
+        }
+
+        .terminal {
+            background: #121812;
+            border: 1px solid #3c4c3b;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px #00000035;
+            transform: rotate(1.3deg);
+            transition: transform 400ms ease;
+        }
+
+        .terminal:hover {
+            transform: rotate(0deg) translateY(-5px);
+        }
+
+        .terminal-bar {
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--line);
+            background: #1b241b;
+            font: 11px var(--mono);
+            color: var(--muted);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dots span {
+            width: 7px;
+            height: 7px;
+            background: #65705f;
+            border-radius: 50%;
+        }
+
+        .terminal-dots span:first-child {
+            background: var(--orange);
+        }
+
+        .terminal-dots span:nth-child(2) {
+            background: #e6c36d;
+        }
+
+        .terminal-dots span:last-child {
+            background: var(--lime);
+        }
+
+        .terminal-content {
+            padding: 25px 23px 22px;
+            min-height: 300px;
+            font: 12px/2.1 var(--mono);
+        }
+
+        .terminal-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .prompt {
+            color: var(--lime);
+        }
+
+        .command {
+            color: var(--text);
+        }
+
+        .terminal-output {
+            color: var(--muted);
+            padding: 9px 0 16px 20px;
+        }
+
+        .terminal-output .key {
+            color: var(--orange);
+        }
+
+        .terminal-output .value {
+            color: var(--lime);
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 9px;
+        }
+
+        .terminal-input {
+            width: 100%;
+            min-width: 0;
+            background: transparent;
+            border: 0;
+            color: var(--text);
+            font: 12px var(--mono);
+            outline: none;
+            caret-color: var(--lime);
+        }
+
+        .terminal-input::placeholder {
+            color: #637160;
+        }
+
+        .terminal-hint {
+            margin-top: 12px;
+            color: #65705f;
+            font: 10px var(--mono);
+        }
+
+        .terminal-output a {
+            color: var(--lime);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .terminal-output a:hover {
+            color: var(--text);
+        }
+
+        .hero-index {
+            position: absolute;
+            right: 0;
+            bottom: 36px;
+            color: #637160;
+            font: 11px var(--mono);
+        }
+
+        /* Skill stack: a horizontal pipeline, not conventional skill cards. */
+
+        .stack-strip {
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: #141b14;
+            padding: 24px 0;
+            overflow: hidden;
+        }
+
+        .stack-inner {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .stack-label {
+            color: var(--muted);
+            font: 11px var(--mono);
+            white-space: nowrap;
+        }
+
+        .stack-items {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 13px;
+        }
+
+        .stack-item {
+            color: var(--text);
+            font: 12px var(--mono);
+            white-space: nowrap;
+        }
+
+        .stack-separator {
+            color: var(--lime);
+            margin-right: 13px;
+        }
+
+        /* Projects: styled as source files with interactive line references. */
+
+        .projects-section {
+            padding-top: 125px;
+        }
+
+        .project-list {
+            border-top: 1px solid var(--line);
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 65px minmax(0, 1fr) 200px;
+            gap: 28px;
+            padding: 35px 0;
+            border-bottom: 1px solid var(--line);
+            align-items: start;
+            position: relative;
+        }
+
+        .project-number {
+            color: var(--lime);
+            font: 12px var(--mono);
+            padding-top: 8px;
+        }
+
+        .project-main {
+            min-width: 0;
+        }
+
+        .project-file {
+            color: var(--muted);
+            font: 11px var(--mono);
+            margin-bottom: 13px;
+        }
+
+        .project h3 {
+            font-size: clamp(25px, 3.2vw, 38px);
+            font-weight: 500;
+            letter-spacing: -0.055em;
+            margin-bottom: 13px;
+            line-height: 1.15;
+        }
+
+        .project-description {
+            color: var(--muted);
+            max-width: 560px;
+            font-size: 15px;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 21px;
+        }
+
+        .tag {
+            border: 1px solid #3a4837;
+            border-radius: 3px;
+            color: #c4d0bd;
+            font: 10px var(--mono);
+            padding: 6px 9px;
+        }
+
+        .project-side {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .project-type {
+            color: var(--lime);
+            font: 10px var(--mono);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            text-align: right;
+        }
+
+        .project-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 10px 13px;
+            cursor: pointer;
+            font: 11px var(--mono);
+            transition: color 180ms ease, border-color 180ms ease;
+        }
+
+        .project-toggle:hover,
+        .project-toggle[aria-expanded="true"] {
+            color: var(--lime);
+            border-color: var(--lime-dark);
+        }
+
+        .project-toggle .arrow {
+            display: inline-block;
+            transition: transform 180ms ease;
+        }
+
+        .project-toggle[aria-expanded="true"] .arrow {
+            transform: rotate(90deg);
+        }
+
+        .project-detail {
+            display: none;
+            margin-top: 25px;
+            padding: 19px 21px;
+            border-left: 2px solid var(--lime-dark);
+            background: #172017;
+            color: var(--muted);
+            font-size: 14px;
+            animation: detailIn 240ms ease both;
+        }
+
+        .project-detail.open {
+            display: block;
+        }
+
+        .project-detail p + p {
+            margin-top: 10px;
+        }
+
+        .project-detail strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        @keyframes detailIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Training is presented as a field log. */
+
+        .field-log {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 80px;
+        }
+
+        .field-log-intro {
+            color: var(--muted);
+            max-width: 340px;
+            margin-top: 22px;
+            font-size: 15px;
+        }
+
+        .log-entry {
+            padding: 0 0 29px 24px;
+            border-left: 1px solid var(--line);
+            position: relative;
+        }
+
+        .log-entry::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: 7px;
+            width: 9px;
+            height: 9px;
+            background: var(--lime);
+            border-radius: 50%;
+        }
+
+        .log-meta {
+            color: var(--lime);
+            font: 11px var(--mono);
+            margin-bottom: 10px;
+        }
+
+        .log-entry h3 {
+            font-size: 23px;
+            letter-spacing: -0.04em;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .log-entry p {
+            color: var(--muted);
+            max-width: 480px;
+            font-size: 14px;
+        }
+
+        .log-entry:last-child {
+            padding-bottom: 0;
+        }
+
+        /* Education is an intentionally compact status panel. */
+
+        .education-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid var(--line);
+            background: var(--surface);
+        }
+
+        .education-main {
+            padding: 39px;
+        }
+
+        .education-main .mono {
+            color: var(--lime);
+            font-size: 11px;
+        }
+
+        .education-main h3 {
+            font-size: clamp(27px, 4vw, 43px);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.06em;
+            margin: 19px 0 13px;
+        }
+
+        .education-main p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .education-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-left: 1px solid var(--line);
+        }
+
+        .edu-stat {
+            padding: 29px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .edu-stat:nth-child(2n) {
+            border-left: 1px solid var(--line);
+        }
+
+        .edu-stat:nth-last-child(-n+2) {
+            border-bottom: 0;
+        }
+
+        .edu-stat strong {
+            font-size: 36px;
+            line-height: 1.2;
+            font-weight: 500;
+            letter-spacing: -0.06em;
+            color: var(--lime);
+        }
+
+        .edu-stat span {
+            color: var(--muted);
+            font: 11px var(--mono);
+            margin-top: 9px;
+        }
+
+        .cert-section {
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .cert-terminal {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .cert-terminal-label {
+            padding: 24px 0;
+            color: var(--lime);
+            font: 11px var(--mono);
+        }
+
+        .cert-list {
+            list-style: none;
+        }
+
+        .cert-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            padding: 21px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 15px;
+        }
+
+        .cert-list li:last-child {
+            border-bottom: 0;
+        }
+
+        .cert-list li::before {
+            content: "↳";
+            color: var(--lime);
+            font: 14px var(--mono);
+        }
+
+        /* Contact: terminal-style output and direct actions. */
+
+        .contact-section {
+            border-top: 1px solid var(--line);
+            padding: 105px 0 42px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 65px;
+            align-items: end;
+        }
+
+        .contact-title {
+            font-size: clamp(49px, 8vw, 94px);
+            font-weight: 500;
+            letter-spacing: -0.08em;
+            line-height: 0.98;
+            margin: 22px 0 27px;
+        }
+
+        .contact-title span {
+            color: var(--lime);
+        }
+
+        .contact-copy {
+            color: var(--muted);
+            max-width: 430px;
+            font-size: 15px;
+        }
+
+        .contact-links {
+            border-top: 1px solid var(--line);
+        }
+
+        .contact-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 17px 0;
+            border-bottom: 1px solid var(--line);
+            font: 12px var(--mono);
+            transition: color 180ms ease;
+        }
+
+        .contact-link:hover {
+            color: var(--lime);
+        }
+
+        .contact-link span:first-child {
+            color: var(--muted);
+        }
+
+        .contact-link span:last-child {
+            overflow-wrap: anywhere;
+            text-align: right;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid var(--line);
+            margin-top: 100px;
+            padding-top: 23px;
+            color: #748170;
+            font: 10px var(--mono);
+        }
+
+        /* Scroll entrance effects are disabled for users who prefer less motion. */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 600ms ease, transform 600ms cubic-bezier(.2,.65,.25,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 1400px) {
+            .hero {
+                min-height: 790px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                width: min(100% - 44px, var(--container));
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 85px 0 100px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero h1 {
+                font-size: clamp(65px, 12vw, 105px);
+            }
+
+            .terminal {
+                width: min(100%, 580px);
+                transform: none;
+            }
+
+            .terminal:hover {
+                transform: translateY(-3px);
+            }
+
+            .project {
+                grid-template-columns: 42px minmax(0, 1fr) 145px;
+                gap: 18px;
+            }
+
+            .field-log {
+                gap: 35px;
+            }
+
+            .education-main {
+                padding: 29px;
+            }
+
+            .edu-stat {
+                padding: 20px;
+            }
+
+            .contact-grid {
+                gap: 35px;
+            }
+
+            .nav-links {
+                gap: 17px;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .container {
+                width: calc(100% - 36px);
+            }
+
+            .section {
+                padding: 78px 0;
+            }
+
+            nav {
+                min-height: 62px;
+            }
+
+            .brand {
+                font-size: 11px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .nav-links li:nth-child(2),
+            .nav-links li:nth-child(4) {
+                display: none;
+            }
+
+            .nav-contact {
+                padding: 7px 9px;
+            }
+
+            .hero {
+                padding: 73px 0 88px;
+            }
+
+            .hero-grid {
+                gap: 42px;
+            }
+
+            .hero h1 {
+                font-size: clamp(56px, 14vw, 83px);
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .hero-footnote {
+                margin-top: 29px;
+            }
+
+            .terminal-content {
+                padding: 19px 15px;
+                font-size: 11px;
+            }
+
+            .terminal-input {
+                font-size: 11px;
+            }
+
+            .hero-index {
+                bottom: 20px;
+            }
+
+            .stack-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stack-items {
+                gap: 9px;
+            }
+
+            .stack-item {
+                font-size: 11px;
+            }
+
+            .stack-separator {
+                margin-right: 9px;
+            }
+
+            .section-heading {
+                display: block;
+                margin-bottom: 34px;
+            }
+
+            .section-heading h2 {
+                font-size: 44px;
+            }
+
+            .section-heading > p {
+                margin-top: 17px;
+                font-size: 13px;
+            }
+
+            .project {
+                grid-template-columns: 31px minmax(0, 1fr);
+                gap: 12px;
+                padding: 28px 0;
+            }
+
+            .project h3 {
+                font-size: 29px;
+            }
+
+            .project-side {
+                grid-column: 2;
+                align-items: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin-top: 19px;
+            }
+
+            .project-type {
+                text-align: left;
+                align-self: center;
+            }
+
+            .project-toggle {
+                padding: 9px 11px;
+            }
+
+            .project-detail {
+                padding: 15px;
+                font-size: 13px;
+            }
+
+            .field-log {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .field-log-intro {
+                margin-top: 16px;
+            }
+
+            .log-entry h3 {
+                font-size: 22px;
+            }
+
+            .education-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .education-main {
+                padding: 27px 24px;
+            }
+
+            .education-stats {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .edu-stat {
+                padding: 21px;
+            }
+
+            .edu-stat strong {
+                font-size: 32px;
+            }
+
+            .cert-terminal {
+                grid-template-columns: 1fr;
+            }
+
+            .cert-terminal-label {
+                padding: 21px 0 0;
+            }
+
+            .cert-list li {
+                font-size: 13px;
+                gap: 12px;
+            }
+
+            .contact-section {
+                padding-top: 80px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-title {
+                font-size: clamp(57px, 13vw, 76px);
+            }
+
+            .contact-link {
+                font-size: 11px;
+            }
+
+            footer {
+                margin-top: 65px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 370px) {
+            .brand-name {
+                display: none;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .hero h1 {
+                font-size: 53px;
+            }
+
+            .button {
+                padding-inline: 13px;
+                font-size: 11px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="nav-wrap">
+        <nav class="container" aria-label="Main navigation">
+            <a class="brand" href="#home" aria-label="Ankita Kumari home">
+                <span class="brand-mark">A.</span>
+                <span class="brand-name">ankita.kumari</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#projects">/projects</a></li>
+                <li><a href="#experience">/experience</a></li>
+                <li><a href="#education">/education</a></li>
+                <li><a class="nav-contact" href="#contact">Let's connect ↗</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container" id="home">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <div class="eyebrow">Full Stack Developer · B.Tech CSE</div>
+
+                    <h1>
+                        Building<br>
+                        <span class="accent">the web,</span>
+                        thoughtfully.
+                    </h1>
+
+                    <p class="hero-description">
+                        I'm <strong>Ankita Kumari</strong>, a full stack developer
+                        interested in building responsive, user-focused applications
+            and turning ideas into practical digital experiences.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#projects" class="button button-primary">Explore my work <span>↘</span></a>
+                <a href="mailto:sehjalankita@gmail.com" class="button button-secondary">Get in touch ↗</a>
+            </div>
+
+            <div class="hero-footnote">
+                <span class="availability-dot" aria-hidden="true"></span>
+                <span>BASED IN NAWANSHAHR, PUNJAB, INDIA</span>
+            </div>
+        </div>
+
+        <div class="terminal" aria-label="Interactive developer terminal">
+            <div class="terminal-bar">
+                <div class="terminal-dots" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+                <span>ankita@portfolio:~</span>
+                <span>zsh</span>
+            </div>
+
+            <div class="terminal-content" id="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">➜</span>
+                    <span class="command">whoami</span>
+                </div>
+
+                <div class="terminal-output">
+                    <span class="value">ankita kumari</span><br>
+                    full stack developer<br>
+                    b.tech computer science engineering
+                </div>
+
+                <div class="terminal-line">
+                    <span class="prompt">➜</span>
+                    <span class="command">cat focus.json</span>
+                </div>
+
+                <div class="terminal-output">
+                    {<br>
+                    &nbsp; <span class="key">"frontend"</span>: <span class="value">"React, Angular"</span>,<br>
+                    &nbsp; <span class="key">"backend"</span>: <span class="value">"Node.js, Express"</span>,<br>
+                    &nbsp; <span class="key">"mindset"</span>: <span class="value">"build, learn, improve"</span><br>
+                    }
+                </div>
+
+                <div class="terminal-input-line">
+                    <span class="prompt">➜</span>
+                    <input
+                class="terminal-input"
+                id="terminal-input"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Enter a terminal command"
+                placeholder="Try: help"
+            >
+        </div>
+
+        <div class="terminal-hint">Type help and press Enter to explore.</div>
+    </div>
+    </div>
+
+    <div class="hero-index mono">01 / INTRODUCTION</div>
+    </section>
+
+    <section class="stack-strip" aria-label="Technology stack">
+        <div class="container stack-inner">
+            <span class="stack-label">CURRENT TOOLCHAIN //</span>
+            <div class="stack-items">
+                <span class="stack-item"><span class="stack-separator">/</span>React</span>
+                <span class="stack-item"><span class="stack-separator">/</span>Angular</span>
+                <span class="stack-item"><span class="stack-separator">/</span>JavaScript</span>
+                <span class="stack-item"><span class="stack-separator">/</span>Node.js</span>
+                <span class="stack-item"><span class="stack-separator">/</span>Express.js</span>
+                <span class="stack-item"><span class="stack-separator">/</span>Python</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section projects-section" id="projects">
+        <div class="container">
+            <div class="section-heading reveal">
+                <div>
+                    <div class="eyebrow">02 / Selected builds</div>
+                    <h2>Projects in<br>production of ideas.</h2>
+                </div>
+                <p>Each project is a practical exercise in building useful interfaces, organizing functionality, and creating a smoother user experience.</p>
+            </div>
+
+            <div class="project-list">
+
+                <article class="project reveal">
+                    <div class="project-number">01</div>
+
+                    <div class="project-main">
+                        <div class="project-file">src / complaint-management</div>
+                        <h3>Complaint Management System</h3>
+                        <p class="project-description">
+                            A web application for reporting and tracking complaints,
+                            designed to make issue management more organized and
+                            accessible through a responsive interface.
+                        </p>
+
+                        <div class="project-features">
+                            <span class="tag">React</span>
+                            <span class="tag">Responsive UI</span>
+                            <span class="tag">Status Tracking</span>
+                        </div>
+
+                        <div class="project-detail" id="detail-1">
+                            <p><strong>What I built:</strong> Responsive UI components for submitting, viewing, and managing complaints, with status tracking and user-friendly navigation.</p>
+                            <p><strong>Focus:</strong> Clear workflows and an interface that helps users follow an issue from submission to its current status.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-side">
+                        <span class="project-type">Web application</span>
+                        <button class="project-toggle" type="button" aria-expanded="false" aria-controls="detail-1">
+                            <span>Inspect project</span><span class="arrow">↗</span>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-number">02</div>
+
+                    <div class="project-main">
+                        <div class="project-file">src / food-factory</div>
+                        <h3>Food Factory</h3>
+                        <p class="project-description">
+                            A product-focused web application that organizes food
+                            products into a structured browsing experience, making
+                            it easy to explore items and view their details.
+                        </p>
+
+                        <div class="project-features">
+                            <span class="tag">React</span>
+                            <span class="tag">Product UI</span>
+                            <span class="tag">Navigation</span>
+                        </div>
+
+                        <div class="project-detail" id="detail-2">
+                            <p><strong>What I built:</strong> Responsive components for browsing food products and viewing product details.</p>
+                            <p><strong>Focus:</strong> A structured layout, smooth navigation, and an interface that adapts to different screen sizes.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-side">
+                        <span class="project-type">Product interface</span>
+                        <button class="project-toggle" type="button" aria-expanded="false" aria-controls="detail-2">
+                            <span>Inspect project</span><span class="arrow">↗</span>
+                        </button>
+        </div>
+        </article>
+
+        <article class="project reveal">
+            <div class="project-number">03</div>
+
+            <div class="project-main">
+                <div class="project-file">src / portfolio</div>
+                <h3>Personal Portfolio</h3>
+                <p class="project-description">
+                    A personal portfolio website created to bring technical
+            skills and projects together in a clean, responsive,
+            component-based digital experience.
+            </p>
+
+            <div class="project-features">
+                <span class="tag">Angular</span>
+                <span class="tag">Component Architecture</span>
+                <span class="tag">Responsive Design</span>
+            </div>
+
+            <div class="project-detail" id="detail-3">
+                <p><strong>What I built:</strong> An Angular-based portfolio with an organized layout and component-based design principles.</p>
+                <p><strong>Focus:</strong> Intuitive navigation and responsive presentation of projects and technical skills.</p>
+            </div>
+        </div>
+
+        <div class="project-side">
+            <span class="project-type">Personal website</span>
+            <button class="project-toggle" type="button" aria-expanded="false" aria-controls="detail-3">
+                <span>Inspect project</span><span class="arrow">↗</span>
+            </button>
+        </div>
+        </article>
+
+        </div>
+    </div>
+    </section>
+
+    <section class="section" id="experience">
+        <div class="container">
+            <div class="section-heading reveal">
+                <div>
+                    <div class="eyebrow">03 / Field log</div>
+                    <h2>Learning beyond<br>the screen.</h2>
+                </div>
+                <p>Exposure to a different kind of system: real-world manufacturing, operations, and the people behind the process.</p>
+            </div>
+
+            <div class="field-log">
+                <div class="reveal">
+                    <div class="eyebrow">Industrial training</div>
+                    <p class="field-log-intro">
+                My 45-day industrial training at SML ISUZU introduced me
+                to manufacturing workflows and how coordinated teams
+                operate in an industrial environment.
+            </p>
+        </div>
+
+        <div class="log-entries reveal">
+            <article class="log-entry">
+                <div class="log-meta">45 DAYS / ROOPNAGAR, PUNJAB</div>
+                <h3>Industrial Trainee — SML ISUZU</h3>
+                <p>
+                    Gained exposure to industrial processes and manufacturing
+                    operations in the automobile sector, including workflow
+                    management, production techniques, and quality control
+                    practices.
+                </p>
+            </article>
+
+            <article class="log-entry">
+                <div class="log-meta">PRACTICAL LEARNING</div>
+                <h3>Observing systems at work</h3>
+                <p>
+                    Developed an understanding of real-world industrial
+                    environments, teamwork dynamics, and how different
+                    operational activities contribute to a larger process.
+                </p>
+            </article>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section" id="education">
+        <div class="container">
+            <div class="section-heading reveal">
+                <div>
+                    <div class="eyebrow">04 / Academic profile</div>
+                    <h2>Foundation<br>in engineering.</h2>
+                </div>
+                <p>Computer Science Engineering with a focus on full stack development, software fundamentals, and practical application building.</p>
+            </div>
+
+            <div class="education-panel reveal">
+                <div class="education-main">
+                    <div class="mono">2023 — 2027 / PHAGWARA, INDIA</div>
+                    <h3>B.Tech in Computer Science Engineering</h3>
+                    <p>GNA University</p>
+                    <p>Full Stack Development</p>
+                </div>
+
+                <div class="education-stats">
+                    <div class="edu-stat">
+                        <strong>8.17</strong>
+                        <span>CGPA / 10</span>
+                    </div>
+                    <div class="edu-stat">
+                <strong>2027</strong>
+                <span>EXPECTED GRADUATION</span>
+            </div>
+            <div class="edu-stat">
+                <strong>82%</strong>
+                <span>CLASS X / 2021</span>
+            </div>
+            <div class="edu-stat">
+                <strong>79%</strong>
+                <span>CLASS XII / 2023</span>
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section cert-section">
+        <div class="container">
+            <div class="section-heading reveal">
+                <div>
+                    <div class="eyebrow">05 / Credentials</div>
+                    <h2>Additional<br>tooling.</h2>
+                </div>
+                <p>Training and certifications that broaden my understanding of systems, cloud infrastructure, and automation.</p>
+            </div>
+
+            <div class="cert-terminal reveal">
+                <div class="cert-terminal-label">certifications.log</div>
+                <ul class="cert-list">
+                    <li>Red Hat System Administration (RH124)</li>
+                    <li>AWS Academy Graduate — AWS Academy Data Center Technician</li>
+                    <li>UiPath Automation Developer Associate Training (v2024.10)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="reveal">
+                    <div class="eyebrow">06 / End of session</div>
+                    <h2 class="contact-title">Let's build<br><span>something useful.</span></h2>
+                    <p class="contact-copy">
+                Interested in connecting about development opportunities,
+                projects, or ideas? Reach out through any of the links.
+            </p>
+        </div>
+
+        <div class="contact-links reveal">
+            <a class="contact-link" href="mailto:sehjalankita@gmail.com">
+                <span>EMAIL</span>
+                <span>sehjalankita@gmail.com ↗</span>
+            </a>
+
+            <a class="contact-link" href="https://github.com/Ankita15-Sehjal" target="_blank" rel="noopener noreferrer">
+                <span>GITHUB</span>
+                <span>Ankita15-Sehjal ↗</span>
+            </a>
+
+            <a class="contact-link" href="https://linkedin.com/in/ankita-kumari-14a1bb29a" target="_blank" rel="noopener noreferrer">
+                <span>LINKEDIN</span>
+                <span>ankita-kumari ↗</span>
+            </a>
+
+            <a class="contact-link" href="tel:+916239754254">
+                <span>PHONE</span>
+                <span>+91 62397 54254 ↗</span>
+            </a>
+        </div>
+        </div>
+
+        <footer>
+            <span>ANKITA KUMARI / FULL STACK DEVELOPER</span>
+            <span>BUILT WITH CURIOSITY & CODE</span>
+            <a href="#home">BACK TO TOP ↑</a>
+        </footer>
+    </div>
+    </section>
+    </main>
+
+    <script>
+        (() => {
+            "use strict";
+
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            // Reveal content gently as it enters the viewport.
+            const revealItems = document.querySelectorAll(".reveal");
+
+            if (reducedMotion || !("IntersectionObserver" in window)) {
+                revealItems.forEach(item => item.classList.add("visible"));
+            } else {
+                const revealObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.12,
+                    rootMargin: "0px 0px -35px 0px"
+                });
+
+                revealItems.forEach(item => revealObserver.observe(item));
+            }
+
+            // Expand project details without leaving the page.
+            document.querySelectorAll(".project-toggle").forEach(button => {
+                button.addEventListener("click", () => {
+                    const targetId = button.getAttribute("aria-controls");
+                    const detail = document.getElementById(targetId);
+                    const expanded = button.getAttribute("aria-expanded") === "true";
+
+                    button.setAttribute("aria-expanded", String(!expanded));
+                    detail.classList.toggle("open", !expanded);
+
+                    const label = button.querySelector("span:first-child");
+                    label.textContent = expanded ? "Inspect project" : "Close details";
+                });
+            });
+
+            // Terminal: a small interactive portfolio index.
+            const terminalInput = document.getElementById("terminal-input");
+            const terminalContent = document.getElementById("terminal-content");
+
+            const commandResponses = {
+                help: `
+                    <span class="value">Available commands</span><br>
+                    &nbsp; help &nbsp;&nbsp;&nbsp;→ show commands<br>
+                    &nbsp; projects → explore selected builds<br>
+                    &nbsp; skills &nbsp; → view the technology stack<br>
+                    &nbsp; contact → find contact links<br>
+                    &nbsp; clear &nbsp;&nbsp; → clear terminal output
+                `,
+                projects: `
+                    <span class="value">Selected projects</span><br>
+                    &nbsp; 01 / Complaint Management System — React<br>
+                    &nbsp; 02 / Food Factory — React<br>
+                    &nbsp; 03 / Personal Portfolio — Angular<br>
+                    <br>
+                    <a href="#projects">Open project index ↗</a>
+                `,
+                skills: `
+                    <span class="value">Technology stack</span><br>
+                    &nbsp; Frontend: HTML, CSS, JavaScript, React, Angular<br>
+                    &nbsp; Backend: Node.js, Express.js<br>
+                    &nbsp; Concepts: OOP, DBMS, Data Structures<br>
+                    &nbsp; Languages: Java, Python, C, C++
+                `,
+                contact: `
+                    <span class="value">Contact information</span><br>
+                    &nbsp; Email: <a href="mailto:sehjalankita@gmail.com">sehjalankita@gmail.com</a><br>
+                    &nbsp; GitHub: <a href="https://github.com/Ankita15-Sehjal" target="_blank" rel="noopener noreferrer">github.com/Ankita15-Sehjal</a><br>
+                    &nbsp; LinkedIn: <a href="https://linkedin.com/in/ankita-kumari-14a1bb29a" target="_blank" rel="noopener noreferrer">LinkedIn profile</a>
+                `
+            };
+
+            function runCommand(command) {
+                const normalized = command.trim().toLowerCase();
+
+                if (!normalized) return;
+
+                if (normalized === "clear") {
+                    const inputLine = terminalContent.querySelector(".terminal-input-line");
+                    const hint = terminalContent.querySelector(".terminal-hint");
+                    terminalContent.innerHTML = "";
+                    terminalContent.append(inputLine, hint);
+                    return;
+                }
+
+                const output = commandResponses[normalized] || `
+                    <span class="value">Command not found:</span> ${escapeHTML(command)}<br>
+                    Type <span class="value">help</span> to see available commands.
+                `;
+
+                const responseBlock = document.createElement("div");
+                responseBlock.innerHTML = `
+                    <div class="terminal-line">
+                        <span class="prompt">➜</span>
+                        <span class="command">${escapeHTML(command)}</span>
+                    </div>
+                    <div class="terminal-output">${output}</div>
+                `;
+
+                const inputLine = terminalContent.querySelector(".terminal-input-line");
+                const hint = terminalContent.querySelector(".terminal-hint");
+
+                terminalContent.insertBefore(responseBlock, inputLine);
+                terminalInput.value = "";
+
+                // Keep the terminal's interactive prompt in view.
+                if (!reducedMotion) {
+                    terminalInput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                }
+            }
+
+            function escapeHTML(value) {
+                return value.replace(/[&<>"']/g, char => ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                })[char]);
+            }
+
+            terminalInput.addEventListener("keydown", event => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    runCommand(terminalInput.value);
+                }
+            });
+
+            // Highlight the section currently in view in the navigation.
+            const navLinks = document.querySelectorAll(".nav-links a[href^='#']");
+            const navSections = document.querySelectorAll("main section[id]");
+
+            if ("IntersectionObserver" in window) {
+                const navObserver = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            navLinks.forEach(link => {
+                                const active = link.getAttribute("href") === "#" + entry.target.id;
+                                link.classList.toggle("active", active);
+                            });
+                        }
+                    });
+                }, {
+                    rootMargin: "-25% 0px -65% 0px"
+                });
+
+                navSections.forEach(section => navObserver.observe(section));
+            }
+        })();
+    </script>
+
+</body>
+</html>
